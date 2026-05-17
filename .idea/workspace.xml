@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c790749c-7bc7-4060-9592-fc8fe7679d78" name="Changes" comment="add bun js via hono js auth provider">
+    <list default="true" id="c790749c-7bc7-4060-9592-fc8fe7679d78" name="Changes" comment="add golang auth provider">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,7 +77,7 @@
     "npm.db:migrate.executor": "Run",
     "npm.dev.executor": "Run",
     "npm.docker:build.executor": "Run",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external"
+    "ts.external.directory.path": "/Users/vladzhukovskyi/Desktop/code/go-bun-performance/load/k6/node_modules/typescript/lib"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -169,7 +169,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add bun js via hono js auth provider" />
-    <option name="LAST_COMMIT_MESSAGE" value="add bun js via hono js auth provider" />
+    <MESSAGE value="add golang auth provider" />
+    <option name="LAST_COMMIT_MESSAGE" value="add golang auth provider" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

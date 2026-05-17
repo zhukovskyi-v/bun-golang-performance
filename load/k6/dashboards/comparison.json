@@ -1,0 +1,1981 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Go vs Bun identity provider services head-to-head under identical k6 load.",
+  "editable": true,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "type": "text",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 200,
+      "options": {
+        "mode": "markdown",
+        "content": "## Reading this dashboard\n\n**Go = blue. Bun = orange.** Lower latency, lower errors, higher RPS = better.\n\n- **Row 1** Current state at a glance (mean over the selected time range).\n- **Row 2** Latency per endpoint — solid p50, line p95, dashed p99. Both services overlaid per chart.\n- **Row 3** Errors and throughput over time.\n- **Row 4** Whole user journeys (flow durations).\n- **Row 5** App-side CPU/RAM/GC (collapsed by default).\n- **Row 6** k6 load generator health (collapsed).\n\nFilter top: **Scenario** (smoke/load/stress/soak). Time range top-right."
+      }
+    },
+    {
+      "type": "row",
+      "id": 100,
+      "title": "1 — Headline (average over selected range)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "stat",
+      "title": "Error rate — Go",
+      "id": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_failed_rate{service=\"go\", scenario=~\"$scenario\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "percentunit",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.01
+              },
+              {
+                "color": "red",
+                "value": 0.05
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Error rate — Bun",
+      "id": 2,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_failed_rate{service=\"bun\", scenario=~\"$scenario\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "percentunit",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.01
+              },
+              {
+                "color": "red",
+                "value": 0.05
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Login p95 — Go",
+      "id": 3,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"go\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "s",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 2.0
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Login p95 — Bun",
+      "id": 4,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"bun\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "s",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 2.0
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Verify p95 — Go",
+      "id": 5,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 9
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"go\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "s",
+          "decimals": 3,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.1
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Verify p95 — Bun",
+      "id": 6,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 9
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"bun\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "s",
+          "decimals": 3,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.1
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Requests/sec — Go",
+      "id": 7,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 9
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(k6_http_reqs_total{service=\"go\", scenario=~\"$scenario\"}[1m]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "unit": "reqps",
+          "decimals": 1
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Requests/sec — Bun",
+      "id": 8,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 9
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(k6_http_reqs_total{service=\"bun\", scenario=~\"$scenario\"}[1m]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          },
+          "unit": "reqps",
+          "decimals": 1
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "type": "row",
+      "id": 101,
+      "title": "2 — Latency per endpoint",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "POST /auth/register",
+      "id": 10,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"go\", scenario=~\"$scenario\", endpoint=\"register\"})",
+          "legendFormat": "Go p50",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"go\", scenario=~\"$scenario\", endpoint=\"register\"})",
+          "legendFormat": "Go p95",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"go\", scenario=~\"$scenario\", endpoint=\"register\"})",
+          "legendFormat": "Go p99",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"bun\", scenario=~\"$scenario\", endpoint=\"register\"})",
+          "legendFormat": "Bun p50",
+          "refId": "D"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"bun\", scenario=~\"$scenario\", endpoint=\"register\"})",
+          "legendFormat": "Bun p95",
+          "refId": "E"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"bun\", scenario=~\"$scenario\", endpoint=\"register\"})",
+          "legendFormat": "Bun p99",
+          "refId": "F"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 0
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Go.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Bun.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p50.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dot"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p99.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "min",
+            "mean",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "POST /auth/login",
+      "id": 11,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"go\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "legendFormat": "Go p50",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"go\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "legendFormat": "Go p95",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"go\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "legendFormat": "Go p99",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"bun\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "legendFormat": "Bun p50",
+          "refId": "D"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"bun\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "legendFormat": "Bun p95",
+          "refId": "E"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"bun\", scenario=~\"$scenario\", endpoint=\"login\"})",
+          "legendFormat": "Bun p99",
+          "refId": "F"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 0
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Go.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Bun.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p50.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dot"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p99.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "min",
+            "mean",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "POST /auth/refresh",
+      "id": 12,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"go\", scenario=~\"$scenario\", endpoint=\"refresh\"})",
+          "legendFormat": "Go p50",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"go\", scenario=~\"$scenario\", endpoint=\"refresh\"})",
+          "legendFormat": "Go p95",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"go\", scenario=~\"$scenario\", endpoint=\"refresh\"})",
+          "legendFormat": "Go p99",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"bun\", scenario=~\"$scenario\", endpoint=\"refresh\"})",
+          "legendFormat": "Bun p50",
+          "refId": "D"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"bun\", scenario=~\"$scenario\", endpoint=\"refresh\"})",
+          "legendFormat": "Bun p95",
+          "refId": "E"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"bun\", scenario=~\"$scenario\", endpoint=\"refresh\"})",
+          "legendFormat": "Bun p99",
+          "refId": "F"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 0
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Go.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Bun.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p50.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dot"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p99.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "min",
+            "mean",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "POST /auth/verify",
+      "id": 13,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"go\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "legendFormat": "Go p50",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"go\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "legendFormat": "Go p95",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"go\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "legendFormat": "Go p99",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p50{service=\"bun\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "legendFormat": "Bun p50",
+          "refId": "D"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p95{service=\"bun\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "legendFormat": "Bun p95",
+          "refId": "E"
+        },
+        {
+          "expr": "avg(k6_http_req_duration_p99{service=\"bun\", scenario=~\"$scenario\", endpoint=\"verify\"})",
+          "legendFormat": "Bun p99",
+          "refId": "F"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 0
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Go.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Bun.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p50.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dot"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p99.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "min",
+            "mean",
+            "max"
+          ]
+        }
+      }
+    },
+    {
+      "type": "row",
+      "id": 102,
+      "title": "3 — Errors & throughput",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Error rate (failed / total requests)",
+      "id": 20,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_http_req_failed_rate{service=\"go\", scenario=~\"$scenario\"})",
+          "legendFormat": "Go",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_http_req_failed_rate{service=\"bun\", scenario=~\"$scenario\"})",
+          "legendFormat": "Bun",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "unit": "percentunit",
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Go"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bun"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean"
+          ]
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests per second (all endpoints)",
+      "id": 21,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(k6_http_reqs_total{service=\"go\", scenario=~\"$scenario\"}[1m]))",
+          "legendFormat": "Go",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(k6_http_reqs_total{service=\"bun\", scenario=~\"$scenario\"}[1m]))",
+          "legendFormat": "Bun",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 15
+          },
+          "unit": "reqps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Go"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bun"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean"
+          ]
+        }
+      }
+    },
+    {
+      "type": "row",
+      "id": 103,
+      "title": "4 — End-to-end user flow durations",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "New user flow (register → login → verify×3 → refresh → verify×2)",
+      "id": 30,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 43
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_flow_new_user_total_duration_p95{service=\"go\", scenario=~\"$scenario\"})",
+          "legendFormat": "Go p95",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_flow_new_user_total_duration_p99{service=\"go\", scenario=~\"$scenario\"})",
+          "legendFormat": "Go p99",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(k6_flow_new_user_total_duration_p95{service=\"bun\", scenario=~\"$scenario\"})",
+          "legendFormat": "Bun p95",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(k6_flow_new_user_total_duration_p99{service=\"bun\", scenario=~\"$scenario\"})",
+          "legendFormat": "Bun p99",
+          "refId": "D"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Go.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Bun.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p99.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean"
+          ]
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Returning user flow (login → verify×5 → refresh → verify×3)",
+      "id": 31,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 43
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(k6_flow_returning_user_total_duration_p95{service=\"go\", scenario=~\"$scenario\"})",
+          "legendFormat": "Go p95",
+          "refId": "A"
+        },
+        {
+          "expr": "avg(k6_flow_returning_user_total_duration_p99{service=\"go\", scenario=~\"$scenario\"})",
+          "legendFormat": "Go p99",
+          "refId": "B"
+        },
+        {
+          "expr": "avg(k6_flow_returning_user_total_duration_p95{service=\"bun\", scenario=~\"$scenario\"})",
+          "legendFormat": "Bun p95",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(k6_flow_returning_user_total_duration_p99{service=\"bun\", scenario=~\"$scenario\"})",
+          "legendFormat": "Bun p99",
+          "refId": "D"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Go.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Bun.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*p99.*"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "dash",
+                  "dash": [
+                    10,
+                    10
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean"
+          ]
+        }
+      }
+    },
+    {
+      "type": "row",
+      "id": 104,
+      "title": "5 — App-side resources",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 51
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "Process CPU usage",
+          "id": 40,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 52
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "avg(rate(process_cpu_seconds_total{service=\"go\"}[1m]))",
+              "legendFormat": "Go",
+              "refId": "A"
+            },
+            {
+              "expr": "avg(rate(process_cpu_seconds_total{service=\"bun\"}[1m]))",
+              "legendFormat": "Bun",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Go"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bun"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "orange"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "timeseries",
+          "title": "Process resident memory (RSS)",
+          "id": 41,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 52
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "avg(process_resident_memory_bytes{service=\"go\"})",
+              "legendFormat": "Go",
+              "refId": "A"
+            },
+            {
+              "expr": "avg(process_resident_memory_bytes{service=\"bun\"})",
+              "legendFormat": "Bun",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Go"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bun"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "orange"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "timeseries",
+          "title": "Go GC pause duration",
+          "id": 42,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 59
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "avg(go_gc_duration_seconds{service=\"go\", quantile=\"0.5\"})",
+              "legendFormat": "p50",
+              "refId": "A"
+            },
+            {
+              "expr": "avg(go_gc_duration_seconds{service=\"go\", quantile=\"0.95\"})",
+              "legendFormat": "p95",
+              "refId": "B"
+            },
+            {
+              "expr": "avg(go_gc_duration_seconds{service=\"go\", quantile=\"1\"})",
+              "legendFormat": "max",
+              "refId": "C"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            }
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "timeseries",
+          "title": "Bun event loop lag",
+          "id": 43,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 59
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "avg(nodejs_eventloop_lag_seconds{service=\"bun\"})",
+              "legendFormat": "mean",
+              "refId": "A"
+            },
+            {
+              "expr": "avg(nodejs_eventloop_lag_p95_seconds{service=\"bun\"})",
+              "legendFormat": "p95",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            }
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "id": 105,
+      "title": "6 — k6 load generator health",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 52
+      },
+      "collapsed": true,
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "Active VUs",
+          "id": 50,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 53
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "max(k6_vus{service=\"go\", scenario=~\"$scenario\"})",
+              "legendFormat": "Go",
+              "refId": "A"
+            },
+            {
+              "expr": "max(k6_vus{service=\"bun\", scenario=~\"$scenario\"})",
+              "legendFormat": "Bun",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Go"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bun"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "orange"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "timeseries",
+          "title": "Iterations per second",
+          "id": 51,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 8,
+            "y": 53
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(k6_iterations_total{service=\"go\", scenario=~\"$scenario\"}[1m]))",
+              "legendFormat": "Go",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(rate(k6_iterations_total{service=\"bun\", scenario=~\"$scenario\"}[1m]))",
+              "legendFormat": "Bun",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "iops",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Go"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bun"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "orange"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "timeseries",
+          "title": "Dropped iterations/sec (> 0 = load gen can't keep up)",
+          "id": 52,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 16,
+            "y": 53
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(k6_dropped_iterations_total{service=\"go\", scenario=~\"$scenario\"}[1m]))",
+              "legendFormat": "Go",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(rate(k6_dropped_iterations_total{service=\"bun\", scenario=~\"$scenario\"}[1m]))",
+              "legendFormat": "Bun",
+              "refId": "B"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": {
+                "drawStyle": "line",
+                "lineWidth": 2
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Go"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Bun"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed",
+                      "fixedColor": "orange"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "calcs": [
+                "mean"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "tags": [
+    "k6",
+    "go-bun-performance",
+    "idp"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "prometheus"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Prometheus datasource",
+        "multi": false,
+        "name": "DS_PROMETHEUS",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(k6_http_reqs_total, scenario)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Scenario",
+        "multi": true,
+        "name": "scenario",
+        "options": [],
+        "query": "label_values(k6_http_reqs_total, scenario)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Go vs Bun IDP — Head-to-Head",
+  "uid": "go-bun-idp-k6",
+  "version": 3,
+  "weekStart": ""
+}

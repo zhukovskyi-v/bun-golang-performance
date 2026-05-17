@@ -1,0 +1,24 @@
+{
+  "name": "go-bun-performance-load-k6",
+  "private": true,
+  "version": "0.0.0",
+  "description": "k6 load testing suite for comparing the Go and Bun IDP services.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "bun run build.ts",
+    "smoke": "bun run build.ts smoke && k6 run dist/smoke.js",
+    "load": "bun run build.ts load && k6 run dist/load.js",
+    "stress": "bun run build.ts stress && k6 run dist/stress.js",
+    "soak": "bun run build.ts soak && k6 run dist/soak.js",
+    "smoke:remote": "bun run build.ts smoke && k6 run -o experimental-prometheus-rw dist/smoke.js",
+    "load:remote": "bun run build.ts load && k6 run -o experimental-prometheus-rw dist/load.js",
+    "stress:remote": "bun run build.ts stress && k6 run -o experimental-prometheus-rw dist/stress.js",
+    "soak:remote": "bun run build.ts soak && k6 run -o experimental-prometheus-rw dist/soak.js"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.0",
+    "@types/k6": "^1.3.0",
+    "typescript": "^5.6.3"
+  }
+}
