@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GoORMHelperCache">
+    <option name="schemaMapping">
+      <map>
+        <entry key="AccessTokenClaims">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/auth/jwt.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Config">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Error">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/domain/errors.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ErrorBody">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="GetUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/queries/get_user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="JWTSigner">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/auth/jwt.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Login">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/login.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="LoginBody">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="LoginInput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/login.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="LoginOutput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/login.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="PublicUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/queries/get_user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Refresh">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/refresh.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RefreshBody">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RefreshInput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/refresh.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RefreshOutput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/refresh.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Register">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/register.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RegisterBody">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RegisterInput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/register.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RegisterOutput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/register.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Revoke">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/commands/revoke.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Routes">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Server">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/server/server.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Session">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/database/models.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SessionsRepository">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/repositories/sessions.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/database/models.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UsersRepository">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/repositories/users.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VerifyBody">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VerifyToken">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/queries/verify_token.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VerifyTokenInput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/queries/verify_token.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="VerifyTokenOutput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/queries/verify_token.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="echoValidator">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/http/routes.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/cmd/server/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008136639" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/auth/argon2.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008022993" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/auth/jwt.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008031715" />
+              <option name="schema">
+                <list>
+                  <option value="AccessTokenClaims" />
+                  <option value="JWTSigner" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/auth/refresh.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008034129" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/commands/login.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008195176" />
+              <option name="schema">
+                <list>
+                  <option value="LoginInput" />
+                  <option value="LoginOutput" />
+                  <option value="Login" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/commands/refresh.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008205234" />
+              <option name="schema">
+                <list>
+                  <option value="RefreshInput" />
+                  <option value="RefreshOutput" />
+                  <option value="Refresh" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/commands/register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008269625" />
+              <option name="schema">
+                <list>
+                  <option value="RegisterInput" />
+                  <option value="RegisterOutput" />
+                  <option value="Register" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/commands/revoke.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008073354" />
+              <option name="schema">
+                <list>
+                  <option value="Revoke" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/config/config.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008002947" />
+              <option name="schema">
+                <list>
+                  <option value="Config" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/database/client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008014000" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/database/models.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008008567" />
+              <option name="schema">
+                <list>
+                  <option value="User" />
+                  <option value="Session" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/domain/errors.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008165087" />
+              <option name="schema">
+                <list>
+                  <option value="Error" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/http/middleware.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008096112" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/http/routes.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008223792" />
+              <option name="schema">
+                <list>
+                  <option value="RegisterBody" />
+                  <option value="LoginBody" />
+                  <option value="RefreshBody" />
+                  <option value="VerifyBody" />
+                  <option value="Routes" />
+                  <option value="echoValidator" />
+                  <option value="ErrorBody" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/metrics/registry.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008091152" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/otel/init.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008121293" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/queries/get_user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008081148" />
+              <option name="schema">
+                <list>
+                  <option value="PublicUser" />
+                  <option value="GetUser" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/queries/verify_token.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008077371" />
+              <option name="schema">
+                <list>
+                  <option value="VerifyTokenInput" />
+                  <option value="VerifyTokenOutput" />
+                  <option value="VerifyToken" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/repositories/sessions.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008047319" />
+              <option name="schema">
+                <list>
+                  <option value="SessionsRepository" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/repositories/users.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008041792" />
+              <option name="schema">
+                <list>
+                  <option value="UsersRepository" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/server/server.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1779008132092" />
+              <option name="schema">
+                <list>
+                  <option value="Server" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="access_token_claims" value="AccessTokenClaims" />
+        <entry key="config" value="Config" />
+        <entry key="echo_validator" value="echoValidator" />
+        <entry key="error" value="Error" />
+        <entry key="error_body" value="ErrorBody" />
+        <entry key="get_user" value="GetUser" />
+        <entry key="jwt_signer" value="JWTSigner" />
+        <entry key="login" value="Login" />
+        <entry key="login_body" value="LoginBody" />
+        <entry key="login_input" value="LoginInput" />
+        <entry key="login_output" value="LoginOutput" />
+        <entry key="public_user" value="PublicUser" />
+        <entry key="refresh" value="Refresh" />
+        <entry key="refresh_body" value="RefreshBody" />
+        <entry key="refresh_input" value="RefreshInput" />
+        <entry key="refresh_output" value="RefreshOutput" />
+        <entry key="register" value="Register" />
+        <entry key="register_body" value="RegisterBody" />
+        <entry key="register_input" value="RegisterInput" />
+        <entry key="register_output" value="RegisterOutput" />
+        <entry key="revoke" value="Revoke" />
+        <entry key="routes" value="Routes" />
+        <entry key="server" value="Server" />
+        <entry key="session" value="Session" />
+        <entry key="sessions_repository" value="SessionsRepository" />
+        <entry key="user" value="User" />
+        <entry key="users_repository" value="UsersRepository" />
+        <entry key="verify_body" value="VerifyBody" />
+        <entry key="verify_token" value="VerifyToken" />
+        <entry key="verify_token_input" value="VerifyTokenInput" />
+        <entry key="verify_token_output" value="VerifyTokenOutput" />
+      </map>
+    </option>
+    <option name="lastTimeChecked" value="1779008531509" />
+  </component>
+</project>

@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c790749c-7bc7-4060-9592-fc8fe7679d78" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/hono-idp/drizzle.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/hono-idp/src/database/schema.ts" afterDir="false" />
+    <list default="true" id="c790749c-7bc7-4060-9592-fc8fe7679d78" name="Changes" comment="add bun js via hono js auth provider">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +40,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -66,7 +64,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "javascript.preferred.runtime.type.id": "node",
     "last_opened_file_path": "/Users/vladzhukovskyi/Desktop/code/go-bun-performance",
     "node.js.detected.package.eslint": "true",
@@ -168,6 +166,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add bun js via hono js auth provider" />
+    <option name="LAST_COMMIT_MESSAGE" value="add bun js via hono js auth provider" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
