@@ -12,7 +12,6 @@ COPY . .
 RUN mkdir -p dist && bun build \
     --target=bun \
     --minify \
-    --external @node-rs/argon2 \
     src/index.ts --outfile dist/server.js
 
 FROM oven/bun:1.3-alpine AS runtime
@@ -20,7 +19,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 RUN addgroup -S app && adduser -S app -G app
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules/@node-rs ./node_modules/@node-rs
 COPY drizzle ./drizzle
 USER app
 EXPOSE 8080

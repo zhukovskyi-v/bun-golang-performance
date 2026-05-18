@@ -1,70 +1,28 @@
 package auth
 
 import (
-	"crypto/rand"
-	"crypto/subtle"
-	"encoding/base64"
 	"errors"
-	"fmt"
-	"strings"
 
-	"golang.org/x/crypto/argon2"
+	"golang.org/x/crypto/bcrypt"
 )
 
-const (
-	argonTime    uint32 = 2
-	argonMemory  uint32 = 64 * 1024
-	argonThreads uint8  = 2
-	argonKeyLen  uint32 = 32
-	argonSaltLen        = 16
-)
+const bcryptCost = 10
 
 func HashPassword(plain string) (string, error) {
-	salt := make([]byte, argonSaltLen)
-	if _, err := rand.Read(salt); err != nil {
-		return "", fmt.Errorf("rand salt: %w", err)
+	h, err := bcrypt.GenerateFromPassword([]byte(plain), bcryptCost)
+	if err != nil {
+		return "", err
 	}
-	hash := argon2.IDKey([]byte(plain), salt, argonTime, argonMemory, argonThreads, argonKeyLen)
-	return fmt.Sprintf(
-		"$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s",
-		argon2.Version,
-		argonMemory,
-		argonTime,
-		argonThreads,
-		base64.RawStdEncoding.EncodeToString(salt),
-		base64.RawStdEncoding.EncodeToString(hash),
-	), nil
+	return string(h), nil
 }
 
 func VerifyPassword(encoded, plain string) (bool, error) {
-	parts := strings.Split(encoded, "$")
-	if len(parts) != 6 || parts[1] != "argon2id" {
-		return false, errors.New("invalid argon2 encoded format")
+	err := bcrypt.CompareHashAndPassword([]byte(encoded), []byte(plain))
+	if err == nil {
+		return true, nil
 	}
-
-	var version int
-	if _, err := fmt.Sscanf(parts[2], "v=%d", &version); err != nil {
-		return false, fmt.Errorf("parse version: %w", err)
+	if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
+		return false, nil
 	}
-	if version != argon2.Version {
-		return false, fmt.Errorf("unsupported argon2 version: %d", version)
-	}
-
-	var m, t uint32
-	var p uint8
-	if _, err := fmt.Sscanf(parts[3], "m=%d,t=%d,p=%d", &m, &t, &p); err != nil {
-		return false, fmt.Errorf("parse params: %w", err)
-	}
-
-	salt, err := base64.RawStdEncoding.DecodeString(parts[4])
-	if err != nil {
-		return false, fmt.Errorf("decode salt: %w", err)
-	}
-	want, err := base64.RawStdEncoding.DecodeString(parts[5])
-	if err != nil {
-		return false, fmt.Errorf("decode hash: %w", err)
-	}
-
-	got := argon2.IDKey([]byte(plain), salt, t, m, p, uint32(len(want)))
-	return subtle.ConstantTimeCompare(got, want) == 1, nil
+	return false, err
 }
