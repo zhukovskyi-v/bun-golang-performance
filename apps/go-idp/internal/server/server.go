@@ -2,8 +2,10 @@ package server
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	stdlog "log"
 	stdhttp "net/http"
 	"os"
 	"os/signal"
@@ -36,7 +38,25 @@ func New(db *gorm.DB, signer *auth.JWTSigner, port int, otelShutdown otelinit.Sh
 	e.HidePort = true
 	e.HTTPErrorHandler = httpx.ErrorHandler()
 
-	e.Use(middleware.Recover())
+	e.Use(middleware.RequestID())
+	e.Use(middleware.RecoverWithConfig(middleware.RecoverConfig{
+		StackSize:         4 << 10,
+		DisablePrintStack: true,
+		LogErrorFunc: func(c echo.Context, err error, stack []byte) error {
+			entry := map[string]any{
+				"level":      "error",
+				"msg":        "panic",
+				"method":     c.Request().Method,
+				"path":       c.Request().URL.Path,
+				"err":        err.Error(),
+				"stack":      string(stack),
+				"request_id": c.Response().Header().Get(echo.HeaderXRequestID),
+			}
+			buf, _ := json.Marshal(entry)
+			stdlog.Println(string(buf))
+			return err
+		},
+	}))
 	e.Use(otelecho.Middleware(otelinit.ServiceName))
 	e.Use(httpx.MetricsMiddleware)
 	e.Use(httpx.RequestLogger)
@@ -55,6 +75,12 @@ func New(db *gorm.DB, signer *auth.JWTSigner, port int, otelShutdown otelinit.Sh
 }
 
 func (s *Server) Run() error {
+	s.echo.Server.ReadTimeout = 15 * time.Second
+	s.echo.Server.ReadHeaderTimeout = 5 * time.Second
+	s.echo.Server.WriteTimeout = 30 * time.Second
+	s.echo.Server.IdleTimeout = 60 * time.Second
+	s.echo.Server.MaxHeaderBytes = 1 << 14
+
 	errCh := make(chan error, 1)
 	go func() {
 		addr := ":" + strconv.Itoa(s.port)

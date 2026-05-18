@@ -4,6 +4,9 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"runtime"
+
+	_ "go.uber.org/automaxprocs"
 
 	"go-idp/internal/auth"
 	"go-idp/internal/config"
@@ -17,6 +20,9 @@ func main() {
 	if err != nil {
 		fatal("config", err)
 	}
+
+	fmt.Printf(`{"level":"info","msg":"runtime","gomaxprocs":%d,"numcpu":%d}`+"\n",
+		runtime.GOMAXPROCS(0), runtime.NumCPU())
 
 	ctx := context.Background()
 
