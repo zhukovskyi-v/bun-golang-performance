@@ -6,21 +6,16 @@ import { seedUsers } from '../lib/flows';
 import { buildSummary } from '../lib/summary';
 
 const TARGET_RPS = 30;
-const WARMUP_RPS = 3;
 
 export const options: Options = {
   scenarios: {
     soak: {
-      executor: 'ramping-arrival-rate',
-      startRate: WARMUP_RPS,
+      executor: 'constant-arrival-rate',
+      rate: TARGET_RPS,
       timeUnit: '1s',
+      duration: '60m',
       preAllocatedVUs: 30,
       maxVUs: 150,
-      stages: [
-        { target: WARMUP_RPS, duration: '30s' },
-        { target: TARGET_RPS, duration: '30s' },
-        { target: TARGET_RPS, duration: '60m' },
-      ],
       tags: { scenario: 'soak' },
     },
   },

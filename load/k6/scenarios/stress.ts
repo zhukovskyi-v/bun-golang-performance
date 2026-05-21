@@ -5,23 +5,17 @@ import { dispatch } from '../lib/dispatch';
 import { seedUsers } from '../lib/flows';
 import { buildSummary } from '../lib/summary';
 
-const WARMUP_RPS = 50;
-const RAMP_START_RPS = 10;
-const RAMP_END_RPS = 500;
+const TARGET_RPS = 500;
 
 export const options: Options = {
   scenarios: {
     stress: {
-      executor: 'ramping-arrival-rate',
-      startRate: WARMUP_RPS,
+      executor: 'constant-arrival-rate',
+      rate: TARGET_RPS,
       timeUnit: '1s',
+      duration: '15m',
       preAllocatedVUs: 100,
       maxVUs: 1500,
-      stages: [
-        { target: WARMUP_RPS, duration: '30s' },
-        { target: RAMP_START_RPS, duration: '15s' },
-        { target: RAMP_END_RPS, duration: '15m' },
-      ],
       tags: { scenario: 'stress' },
     },
   },
